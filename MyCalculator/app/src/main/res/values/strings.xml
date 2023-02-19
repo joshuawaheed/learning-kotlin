@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MyCalculator</string>
+    <string name="calc_text"></string>
+    <string name="calc_btn_clr">CLR</string>
+    <string name="calc_btn_equal">=</string>
+    <string name="calc_btn_number_zero">0</string>
+    <string name="calc_btn_number_one">1</string>
+    <string name="calc_btn_number_two">2</string>
+    <string name="calc_btn_number_three">3</string>
+    <string name="calc_btn_number_four">4</string>
+    <string name="calc_btn_number_five">5</string>
+    <string name="calc_btn_number_six">6</string>
+    <string name="calc_btn_number_seven">7</string>
+    <string name="calc_btn_number_eight">8</string>
+    <string name="calc_btn_number_nine">9</string>
+    <string name="calc_btn_operator_divide">/</string>
+    <string name="calc_btn_operator_dot">.</string>
+    <string name="calc_btn_operator_minus">-</string>
+    <string name="calc_btn_operator_multiply">*</string>
+    <string name="calc_btn_operator_plus">+</string>
+</resources>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:padding="@dimen/main_screen_main_layout_padding"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:contentDescription="@string/app_logo_description"
+        android:id="@+id/ivLogo"
+        android:layout_height="220dp"
+        android:layout_width="match_parent"
+        android:src="@drawable/img_main_page"
+        app:layout_constraintBottom_toTopOf="@+id/flStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <FrameLayout
+        android:background="@drawable/item_color_accent_border_ripple_background"
+        android:id="@+id/flStart"
+        android:layout_height="150dp"
+        android:layout_width="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo">
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="START"
+            android:textColor="@color/color_primary"
+            android:textSize="@dimen/default_button_text_size"
+            android:textStyle="bold" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/llExtras"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/llDemos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:background="@drawable/item_circular_color_accent_background"
+                android:id="@+id/flBmi"
+                android:layout_width="70dp"
+                android:layout_height="70dp">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="BMI"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/default_button_text_size"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvCalculator"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:text="Calculator"
+                android:textColor="@color/color_accent"
+                android:textSize="@dimen/default_button_text_size"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:background="@drawable/item_circular_color_accent_background"
+                android:id="@+id/flHistory"
+                android:layout_height="70dp"
+                android:layout_width="70dp">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:layout_height="50dp"
+                    android:layout_width="50dp"
+                    android:src="@drawable/ic_calendar" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvHistory"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:text="History"
+                android:textColor="@color/color_accent"
+                android:textSize="@dimen/default_button_text_size"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llDemos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btnDemoCountdown"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="VIEW DEMO COUNTDOWN" />
+
+        <Button
+            android:id="@+id/btnDemoTextToSpeech"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="VIEW DEMO TEXT TO SPEECH" />
+
+        <Button
+            android:id="@+id/btnDemoViewBindingRecyclerView"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="VIEW DEMO VIEW BINDING RECYCLER VIEW" />
+
+        <Button
+            android:id="@+id/btnDemoRoom"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="VIEW DEMO ROOM DATABASE" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

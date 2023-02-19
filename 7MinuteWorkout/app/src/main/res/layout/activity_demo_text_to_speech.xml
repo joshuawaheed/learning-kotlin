@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DemoTextToSpeech">
+
+    <androidx.appcompat.widget.Toolbar
+        android:background="@color/white"
+        android:id="@+id/tbExercise"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:theme="@style/ToolbarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/color_primary" />
+
+    <TextView
+        android:id="@+id/tvIntro"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Hello World! This is a demo for text to speech."
+        android:textColor="@color/color_primary"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/etEnteredText" />
+
+    <EditText
+        android:id="@+id/etEnteredText"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:hint="Enter text" />
+
+    <Button
+        android:id="@+id/btnSpeak"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="PRESS TO SPEAK THE ENTERED TEXT"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/etEnteredText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
