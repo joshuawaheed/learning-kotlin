@@ -1,4 +1,4 @@
-package com.joshuawaheed.projemanag
+package com.joshuawaheed.projemanag.activities
 
 import android.content.Intent
 import android.graphics.Typeface
@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import android.widget.TextView
+import com.joshuawaheed.projemanag.R
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

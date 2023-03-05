@@ -1,21 +1,22 @@
-package com.joshuawaheed.projemanag
+package com.joshuawaheed.projemanag.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.appcompat.widget.Toolbar
+import com.joshuawaheed.projemanag.R
 
-class SignInActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        setContentView(R.layout.activity_sign_up)
         val flagFullScreen = WindowManager.LayoutParams.FLAG_FULLSCREEN
         window.setFlags(flagFullScreen, flagFullScreen)
         setupActionBar()
     }
 
     private fun setupActionBar() {
-        val toolbar: Toolbar = findViewById(R.id.toolbar_sign_in_activity)
+        val toolbar: Toolbar = findViewById(R.id.toolbar_sign_up_activity)
 
         setSupportActionBar(toolbar)
 

@@ -1,12 +1,13 @@
-package com.joshuawaheed.projemanag
+package com.joshuawaheed.projemanag.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Button
+import com.joshuawaheed.projemanag.R
 
-class IntroActivity : AppCompatActivity() {
+class IntroActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
