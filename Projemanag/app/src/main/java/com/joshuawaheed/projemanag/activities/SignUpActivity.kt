@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.joshuawaheed.projemanag.R
 
 class SignUpActivity : BaseActivity() {
@@ -53,11 +55,37 @@ class SignUpActivity : BaseActivity() {
         val password: String = etPassword.text.toString().trim { it <= ' ' }
 
         if (validateForm(email, name, password)) {
-            Toast.makeText(
-                this@SignUpActivity,
-                "Now we can register a new user",
-                Toast.LENGTH_LONG
-            ).show()
+            showProgressDialog(resources.getString(R.string.please_wait))
+
+            FirebaseAuth
+                .getInstance()
+                .createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener {
+                    task ->
+                    hideProgressDialog()
+
+                    if (task.isSuccessful) {
+                        val firebaseUser: FirebaseUser = task.result!!.user!!
+                        val registeredEmail = firebaseUser.email!!
+
+                        Toast.makeText(
+                            this@SignUpActivity,
+                            "$name you have successfully registered " +
+                            "the email address $registeredEmail",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        FirebaseAuth.getInstance().signOut()
+
+                        finish()
+                    } else {
+                        Toast.makeText(
+                            this@SignUpActivity,
+                            task.exception!!.message,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
         }
     }
 

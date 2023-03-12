@@ -53,7 +53,7 @@ open class BaseActivity : AppCompatActivity() {
 
         mProgressDialog.setContentView(R.layout.dialog_progress)
 
-        val tvProgressText: TextView = findViewById(R.id.tv_progress_text)
+        val tvProgressText: TextView = mProgressDialog.findViewById(R.id.tv_progress_text)
         tvProgressText.text = text
 
         mProgressDialog.show()
