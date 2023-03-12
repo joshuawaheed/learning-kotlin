@@ -15,10 +15,19 @@ import com.joshuawaheed.projemanag.R
 class SignUpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_sign_up)
+
         val flagFullScreen = WindowManager.LayoutParams.FLAG_FULLSCREEN
         window.setFlags(flagFullScreen, flagFullScreen)
+
         setupActionBar()
+
+        val btnSignUp: Button = findViewById(R.id.btn_sign_up)
+
+        btnSignUp.setOnClickListener {
+            registerUser()
+        }
     }
 
     private fun setupActionBar() {
@@ -35,12 +44,6 @@ class SignUpActivity : BaseActivity() {
 
         toolbar.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()
-        }
-
-        val btnSignUp: Button = findViewById(R.id.btn_sign_up)
-
-        btnSignUp.setOnClickListener {
-            registerUser()
         }
     }
 
@@ -81,7 +84,7 @@ class SignUpActivity : BaseActivity() {
                     } else {
                         Toast.makeText(
                             this@SignUpActivity,
-                            task.exception!!.message,
+                            "Registration failed",
                             Toast.LENGTH_LONG
                         ).show()
                     }
