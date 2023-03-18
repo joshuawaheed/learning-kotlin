@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.joshuawaheed.projemanag.R
+import com.joshuawaheed.projemanag.firebase.FirestoreClass
+import com.joshuawaheed.projemanag.models.User
 
 class SignInActivity : BaseActivity() {
     private lateinit var auth: FirebaseAuth
@@ -35,6 +37,12 @@ class SignInActivity : BaseActivity() {
         btnSignIn.setOnClickListener {
             signInRegisteredUser()
         }
+    }
+
+    fun signInSuccess(user: User) {
+        hideProgressDialog()
+        startActivity(Intent(this@SignInActivity, MainActivity::class.java))
+        finish()
     }
 
     private fun setupActionBar() {
@@ -67,13 +75,13 @@ class SignInActivity : BaseActivity() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) {
                     task ->
-                    hideProgressDialog()
-
                     if (task.isSuccessful) {
                         Log.d("Sign in", "createUserWithEmail:success")
                         val user = auth.currentUser
-                        startActivity(Intent(this@SignInActivity, MainActivity::class.java))
+                        FirestoreClass().signInUser(this@SignInActivity)
                     } else {
+                        hideProgressDialog()
+                        
                         Log.w("Sign in", "createUserWithEmail:failure", task.exception)
 
                         Toast.makeText(

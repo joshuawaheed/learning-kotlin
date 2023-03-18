@@ -11,6 +11,8 @@ import androidx.appcompat.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.joshuawaheed.projemanag.R
+import com.joshuawaheed.projemanag.firebase.FirestoreClass
+import com.joshuawaheed.projemanag.models.User
 
 class SignUpActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +30,20 @@ class SignUpActivity : BaseActivity() {
         btnSignUp.setOnClickListener {
             registerUser()
         }
+    }
+
+    fun userRegisteredSuccess() {
+        Toast.makeText(
+            this@SignUpActivity,
+            "You have successfully registered",
+            Toast.LENGTH_LONG
+        ).show()
+
+        hideProgressDialog()
+
+        FirebaseAuth.getInstance().signOut()
+
+        finish()
     }
 
     private fun setupActionBar() {
@@ -65,23 +81,20 @@ class SignUpActivity : BaseActivity() {
                 .createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     task ->
-                    hideProgressDialog()
-
                     if (task.isSuccessful) {
                         val firebaseUser: FirebaseUser = task.result!!.user!!
                         val registeredEmail = firebaseUser.email!!
 
-                        Toast.makeText(
-                            this@SignUpActivity,
-                            "$name you have successfully registered " +
-                            "the email address $registeredEmail",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        val user = User(
+                            firebaseUser.uid,
+                            name,
+                            registeredEmail
+                        )
 
-                        FirebaseAuth.getInstance().signOut()
-
-                        finish()
+                        FirestoreClass().registerUser(this@SignUpActivity, user)
                     } else {
+                        hideProgressDialog()
+
                         Toast.makeText(
                             this@SignUpActivity,
                             "Registration failed",
