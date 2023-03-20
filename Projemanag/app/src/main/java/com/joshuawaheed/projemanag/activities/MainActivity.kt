@@ -1,5 +1,6 @@
 package com.joshuawaheed.projemanag.activities
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,9 +19,22 @@ import com.joshuawaheed.projemanag.firebase.FirestoreClass
 import com.joshuawaheed.projemanag.models.User
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+    companion object {
+        const val MY_PROFILE_REQUEST_CODE: Int = 11
+    }
+
     private lateinit var mDrawer: DrawerLayout
     private lateinit var mNavigation: NavigationView
     private lateinit var mToolbar: Toolbar
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK && requestCode == MY_PROFILE_REQUEST_CODE) {
+            FirestoreClass().loadUserData(this)
+        }
+    }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
@@ -44,17 +58,16 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         mNavigation.setNavigationItemSelectedListener(this)
 
-        FirestoreClass().signInUser(this)
+        FirestoreClass().loadUserData(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_my_profile -> {
-                Toast.makeText(
-                    this@MainActivity,
-                    R.string.nav_my_profile,
-                    Toast.LENGTH_SHORT
-                ).show()
+                startActivityForResult(
+                    Intent(this, MyProfileActivity::class.java),
+                    MY_PROFILE_REQUEST_CODE
+                )
             }
             R.id.nav_sign_out -> {
                 FirebaseAuth.getInstance().signOut()
