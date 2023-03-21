@@ -17,4 +17,10 @@
     <string name="mobile">Mobile</string>
     <string name="update">UPDATE</string>
     <string name="my_profile_title">My Profile</string>
+    <string name="create_board_title">Create Board</string>
+    <string name="create">CREATE</string>
+    <string name="board_name">Board Name</string>
+    <string name="no_boards_are_available">No Boards are available!!!</string>
+    <string name="item_board_name_text">Board Name</string>
+    <string name="item_board_created_by_text">Created by</string>
 </resources>

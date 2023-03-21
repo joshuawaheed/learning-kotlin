@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/selectableItemBackground"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/item_board_content_marginBottom"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:padding="@dimen/item_board_content_padding">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:contentDescription="@string/image_contentDescription"
+            android:id="@+id/iv_board_image"
+            android:layout_height="@dimen/item_board_image_size"
+            android:layout_width="@dimen/item_board_image_size"
+            android:src="@drawable/ic_board_place_holder"
+            app:shapeAppearanceOverlay="@style/circleImageView"
+            app:strokeWidth="@dimen/item_board_image_circle_border_width"
+            app:strokeColor="@color/primary_text_color" />
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_board_name_layout_marginStart"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_item_board_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_boards_are_available"
+                android:textColor="@color/primary_text_color"
+                android:textSize="@dimen/item_board_name_text_size"
+                tools:text="@string/item_board_name_text" />
+
+            <TextView
+                android:id="@+id/tv_item_board_created_by"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_boards_are_available"
+                android:textColor="@color/secondary_text_color"
+                android:textSize="@dimen/item_board_created_by_text_size"
+                tools:text="@string/item_board_created_by_text" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    
+    <View
+        android:background="@color/divider_color"
+        android:layout_height="@dimen/item_board_divider_height"
+        android:layout_marginTop="@dimen/item_board_divider_marginTop"
+        android:layout_width="match_parent" />
+
+</LinearLayout>
