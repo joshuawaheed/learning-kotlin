@@ -42,6 +42,23 @@ class FirestoreClass {
             }
     }
 
+    fun getBoardDetails(activity: TaskListActivity, documentId: String) {
+        mFirestore
+            .collection(Constants.BOARDS)
+            .document(documentId)
+            .get()
+            .addOnSuccessListener {
+                document ->
+                Log.i(activity.javaClass.simpleName, document.toString())
+                activity.boardDetails(document.toObject(Board::class.java)!!)
+            }
+            .addOnFailureListener {
+                exception ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName, "Error while creating a board.", exception)
+            }
+    }
+
     fun getBoardsList(activity: MainActivity) {
         mFirestore
             .collection(Constants.BOARDS)

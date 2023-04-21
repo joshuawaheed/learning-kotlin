@@ -117,13 +117,23 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val rvBoardsList: RecyclerView = findViewById(R.id.rv_boards_list)
 
         if (boardsList.size > 0) {
-            val adapter = BoardItemsAdapter(this, boardsList)
-
             tvNoBoardsAvailable.visibility = View.GONE
+
             rvBoardsList.visibility = View.VISIBLE
             rvBoardsList.layoutManager = LinearLayoutManager(this)
             rvBoardsList.setHasFixedSize(true)
+
+            val adapter = BoardItemsAdapter(this, boardsList)
+
             rvBoardsList.adapter = adapter
+
+            adapter.setOnClickListener(object: BoardItemsAdapter.OnClickListener {
+                override fun onClick(position: Int, model: Board) {
+                    val intent = Intent(this@MainActivity, TaskListActivity::class.java)
+                    intent.putExtra(Constants.DOCUMENT_ID, model.documentId)
+                    startActivity(intent)
+                }
+            })
         } else {
             tvNoBoardsAvailable.visibility = View.VISIBLE
             rvBoardsList.visibility = View.GONE
