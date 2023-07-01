@@ -5,10 +5,15 @@ import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.joshuawaheed.projemanag.R
+import com.joshuawaheed.projemanag.activities.TaskListActivity
 import com.joshuawaheed.projemanag.models.Task
 
 open class TaskListitemsAdapter(
@@ -47,6 +52,38 @@ open class TaskListitemsAdapter(
             } else {
                 taskList.visibility = View.GONE
                 taskItem.visibility = View.VISIBLE
+            }
+
+            val taskListTitle: TextView = holder.itemView.findViewById(R.id.tv_task_list_title)
+            taskListTitle.text = model.title
+
+            val taskListName: CardView = holder.itemView.findViewById(R.id.cv_add_task_list_name)
+
+            taskList.setOnClickListener {
+                taskList.visibility = View.GONE
+                taskListName.visibility = View.VISIBLE
+            }
+
+            val closeListNameButton: ImageButton = holder.itemView.findViewById(R.id.ib_close_list_name)
+
+            closeListNameButton.setOnClickListener {
+                taskList.visibility = View.VISIBLE
+                taskListName.visibility = View.GONE
+            }
+
+            val doneListNameButton: ImageButton = holder.itemView.findViewById(R.id.ib_done_list_name)
+
+            doneListNameButton.setOnClickListener {
+                val addTextListName: EditText = holder.itemView.findViewById(R.id.et_add_task_list_name)
+                val addTextListNameText = addTextListName.text.toString()
+
+                if (addTextListNameText.isNotEmpty()) {
+                    if (context is TaskListActivity) {
+                        context.createTaskList(addTextListNameText)
+                    }
+                } else {
+                    Toast.makeText(context, "Please Enter List Name", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

@@ -55,6 +55,7 @@
                 <EditText
                     android:autofillHints="@string/hint_list_name"
                     android:hint="@string/hint_list_name"
+                    android:id="@+id/et_add_task_list_name"
                     android:inputType="text"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

@@ -14,6 +14,25 @@ import com.joshuawaheed.projemanag.utils.Constants
 class FirestoreClass {
     private val mFirestore = FirebaseFirestore.getInstance()
 
+    fun addUpdateTaskList(activity: TaskListActivity, board: Board) {
+        val taskListHashMap = HashMap<String, Any>()
+        taskListHashMap[Constants.TASK_LIST] = board.taskList
+
+        mFirestore
+            .collection(Constants.BOARDS)
+            .document(board.documentId)
+            .update(taskListHashMap)
+            .addOnSuccessListener {
+                Log.e(activity.javaClass.simpleName, "TaskList updated successfully.")
+                activity.addUpdateTaskListSuccess()
+            }
+            .addOnFailureListener {
+                exception ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName, "Error while creating a board", exception)
+            }
+    }
+
     fun createBoard(activity: CreateBoardActivity, board: Board) {
         mFirestore
             .collection(Constants.BOARDS)
@@ -50,7 +69,9 @@ class FirestoreClass {
             .addOnSuccessListener {
                 document ->
                 Log.i(activity.javaClass.simpleName, document.toString())
-                activity.boardDetails(document.toObject(Board::class.java)!!)
+                val board = document.toObject(Board::class.java)!!
+                board.documentId = document.id
+                activity.boardDetails(board)
             }
             .addOnFailureListener {
                 exception ->
