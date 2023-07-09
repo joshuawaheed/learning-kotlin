@@ -1,5 +1,6 @@
 package com.joshuawaheed.projemanag.adapters
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Resources
 import android.view.LayoutInflater
@@ -40,7 +41,7 @@ open class TaskListitemsAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var model = list[position]
+        val model = list[position]
 
         if (holder is MyViewHolder) {
             val taskList: TextView = holder.itemView.findViewById(R.id.tv_add_task_list)
@@ -84,6 +85,76 @@ open class TaskListitemsAdapter(
                 } else {
                     Toast.makeText(context, "Please Enter List Name", Toast.LENGTH_SHORT).show()
                 }
+            }
+
+            val editListButton: ImageButton = holder.itemView.findViewById(R.id.ib_edit_list_name)
+
+            editListButton.setOnClickListener {
+                val editListName: EditText = holder.itemView.findViewById(R.id.et_edit_task_list_name)
+
+                editListName.setText(model.title)
+
+                val titleView: LinearLayout = holder.itemView.findViewById(R.id.ll_title_view)
+
+                titleView.visibility = View.GONE
+
+                val editTaskList: CardView = holder.itemView.findViewById(R.id.cv_edit_task_list_name)
+
+                editTaskList.visibility = View.VISIBLE
+            }
+
+            val closeEditListButton: ImageButton = holder.itemView.findViewById(R.id.ib_close_editable_view)
+
+            closeEditListButton.setOnClickListener {
+                val titleView: LinearLayout = holder.itemView.findViewById(R.id.ll_title_view)
+
+                titleView.visibility = View.VISIBLE
+
+                val editTaskList: CardView = holder.itemView.findViewById(R.id.cv_edit_task_list_name)
+
+                editTaskList.visibility = View.GONE
+            }
+
+            val doneEditListButton: ImageButton = holder.itemView.findViewById(R.id.ib_done_edit_list_name)
+
+            doneEditListButton.setOnClickListener {
+                val editListName: EditText = holder.itemView.findViewById(R.id.et_edit_task_list_name)
+                val editListNameText = editListName.text.toString()
+
+                if (editListNameText.isNotEmpty()) {
+                    if (context is TaskListActivity) {
+                        context.updateTaskList(position, editListNameText, model)
+                    }
+                } else {
+                    Toast.makeText(context, "Please Enter List Name", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            val deleteListButton: ImageButton = holder.itemView.findViewById(R.id.ib_delete_list)
+
+            deleteListButton.setOnClickListener {
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("Alert")
+                builder.setMessage("Are you sure you want to delete ${model.title}.")
+                // builder.setIcon(R.drawable.ic_dialog_alert)
+
+                builder.setPositiveButton("Yes") {
+                    dialogInterface, _ ->
+                    dialogInterface.dismiss()
+
+                    if (context is TaskListActivity) {
+                        context.deleteTaskList(position)
+                    }
+                }
+
+                builder.setNegativeButton("No") {
+                    dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                }
+
+                val alertDialog: AlertDialog = builder.create()
+                alertDialog.setCancelable(false)
+                alertDialog.show()
             }
         }
     }
