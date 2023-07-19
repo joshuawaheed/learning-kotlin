@@ -156,6 +156,36 @@ open class TaskListitemsAdapter(
                 alertDialog.setCancelable(false)
                 alertDialog.show()
             }
+
+            val addCardTextView: TextView = holder.itemView.findViewById(R.id.tv_add_card)
+            val addCardCardView: CardView = holder.itemView.findViewById(R.id.cv_add_card)
+
+            addCardTextView.setOnClickListener {
+                addCardTextView.visibility = View.GONE
+                addCardCardView.visibility = View.VISIBLE
+            }
+
+            val closeAddCardButton: ImageButton = holder.itemView.findViewById(R.id.ib_close_card_name)
+
+            closeAddCardButton.setOnClickListener {
+                addCardTextView.visibility = View.VISIBLE
+                addCardCardView.visibility = View.GONE
+            }
+
+            val doneAddCardButton: ImageButton = holder.itemView.findViewById(R.id.ib_done_card_name)
+
+            doneAddCardButton.setOnClickListener {
+                val addCardName: EditText = holder.itemView.findViewById(R.id.et_card_name)
+                val addCardNameText = addCardName.text.toString()
+
+                if (addCardNameText.isNotEmpty()) {
+                    if (context is TaskListActivity) {
+                        context.addCardToTaskList(position, addCardNameText)
+                    }
+                } else {
+                    Toast.makeText(context, "Please Enter a Card Name", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
