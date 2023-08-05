@@ -17,6 +17,9 @@ object Constants {
     const val PICK_IMAGE_REQUEST_CODE = 2
     const val DOCUMENT_ID: String = "documentId"
     const val TASK_LIST: String = "taskList"
+    const val BOARD_DETAIL: String = "board_detail"
+    const val ID: String = "id"
+    const val EMAIL: String = "email"
 
     fun getFileExtension(activity: Activity, uri: Uri?): String? {
         val uriType = activity.contentResolver.getType(uri!!);
