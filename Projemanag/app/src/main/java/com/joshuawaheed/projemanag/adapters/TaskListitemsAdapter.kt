@@ -196,6 +196,14 @@ open class TaskListitemsAdapter(
             val cardListAdapter = CardListItemsAdapter(context, model.cards)
 
             cardList.adapter = cardListAdapter
+            
+            cardListAdapter.setOnClickListener(object: CardListItemsAdapter.OnClickListener {
+                override fun onClick(cardPosition: Int) {
+                    if (context is TaskListActivity) {
+                        context.cardDetails(position, cardPosition)
+                    }
+                }
+            })
         }
     }
 
