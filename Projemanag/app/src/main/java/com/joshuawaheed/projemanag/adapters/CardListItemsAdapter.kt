@@ -1,6 +1,7 @@
 package com.joshuawaheed.projemanag.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,15 @@ open class CardListItemsAdapter(
         var model = list[position]
 
         if (holder is MyViewHolder) {
+            val labelColor: View = holder.itemView.findViewById(R.id.view_label_color)
+
+            if (model.labelColor.isNotEmpty()) {
+                labelColor.visibility = View.VISIBLE
+                labelColor.setBackgroundColor(Color.parseColor(model.labelColor))
+            } else {
+                labelColor.visibility = View.GONE
+            }
+
             holder.itemView.findViewById<TextView>(R.id.tv_card_name).text = model.name
 
             holder.itemView.setOnClickListener {
