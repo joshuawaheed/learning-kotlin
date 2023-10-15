@@ -7,17 +7,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.joshuawaheed.projemanag.R
+import com.joshuawaheed.projemanag.adapters.CardMemberListItemsAdapter
 import com.joshuawaheed.projemanag.dialogs.LabelColorListDialog
+import com.joshuawaheed.projemanag.dialogs.MembersListDialog
 import com.joshuawaheed.projemanag.firebase.FirestoreClass
 import com.joshuawaheed.projemanag.models.Board
 import com.joshuawaheed.projemanag.models.Card
+import com.joshuawaheed.projemanag.models.SelectedMembers
 import com.joshuawaheed.projemanag.models.Task
+import com.joshuawaheed.projemanag.models.User
 import com.joshuawaheed.projemanag.utils.Constants
 
 class CardDetailsActivity : BaseActivity() {
@@ -25,6 +32,7 @@ class CardDetailsActivity : BaseActivity() {
     private var mTaskListPosition: Int = -1
     private var mCardPosition: Int = -1
     private var mSelectedColor = ""
+    private lateinit var mMembersDetailList: ArrayList<User>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +66,13 @@ class CardDetailsActivity : BaseActivity() {
         tvSelectLabelColor.setOnClickListener {
             labelColorsListDialog()
         }
+
+        val tvSelectMembers: TextView = findViewById(R.id.tv_select_members)
+        tvSelectMembers.setOnClickListener {
+            membersListDialog()
+        }
+
+        setupSelectedMembersList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -139,6 +154,10 @@ class CardDetailsActivity : BaseActivity() {
         if (intent.hasExtra(Constants.CARD_LIST_ITEM_POSITION)) {
             mCardPosition = intent.getIntExtra(Constants.CARD_LIST_ITEM_POSITION, mCardPosition)
         }
+
+        if (intent.hasExtra(Constants.BOARD_MEMBERS_LIST)) {
+            mMembersDetailList = intent.getParcelableArrayListExtra(Constants.BOARD_MEMBERS_LIST)!!
+        }
     }
 
     private fun labelColorsListDialog() {
@@ -153,6 +172,50 @@ class CardDetailsActivity : BaseActivity() {
             override fun onItemSelected(color: String) {
                 mSelectedColor = color
                 setColor()
+            }
+        }
+
+        listDialog.show()
+    }
+
+    private fun membersListDialog() {
+        var cardAssignedMembersList = mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo
+
+        if (cardAssignedMembersList.size > 0) {
+            for (i in mMembersDetailList.indices) {
+                for (j in cardAssignedMembersList) {
+                    if (mMembersDetailList[i].id == j) {
+                        mMembersDetailList[i].selected = true
+                    }
+                }
+            }
+        } else {
+            for (i in mMembersDetailList.indices) {
+                mMembersDetailList[i].selected = false
+            }
+        }
+
+        val listDialog = object: MembersListDialog(
+            this,
+            mMembersDetailList,
+            resources.getString(R.string.str_select_member)
+        ) {
+            override fun onItemSelected(user: User, action: String) {
+                if (action == Constants.SELECT) {
+                    if (!mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo.contains(user.id)) {
+                        mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo.add(user.id)
+                    }
+                } else {
+                    mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo.remove(user.id)
+
+                    for (i in mMembersDetailList.indices) {
+                        if (mMembersDetailList[i].id == user.id) {
+                            mMembersDetailList[i].selected = false
+                        }
+                    }
+                }
+
+                setupSelectedMembersList()
             }
         }
 
@@ -183,6 +246,48 @@ class CardDetailsActivity : BaseActivity() {
         }
     }
 
+    private fun setupSelectedMembersList() {
+        val cardAssignedMemberList = mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition].assignedTo
+        val selectedMembersList = ArrayList<SelectedMembers>()
+
+        for (i in mMembersDetailList.indices) {
+            for (j in cardAssignedMemberList) {
+                if (mMembersDetailList[i].id == j) {
+                    val selectedMember = SelectedMembers(
+                        mMembersDetailList[i].id,
+                        mMembersDetailList[i].image
+                    )
+
+                    selectedMembersList.add(selectedMember)
+                }
+            }
+        }
+
+        val tvSelectedMembers: TextView = findViewById(R.id.tv_select_members)
+        val rvSelectedMembersList: RecyclerView = findViewById(R.id.rv_selected_members_list)
+
+        if (selectedMembersList.size > 0) {
+            selectedMembersList.add(SelectedMembers("", ""))
+
+            tvSelectedMembers.visibility = View.GONE
+
+            rvSelectedMembersList.visibility = View.VISIBLE
+            rvSelectedMembersList.layoutManager = GridLayoutManager(this, 6)
+
+            val adapter = CardMemberListItemsAdapter(this, selectedMembersList)
+            rvSelectedMembersList.adapter = adapter
+
+            adapter.setOnClickListener(object: CardMemberListItemsAdapter.OnClickListener {
+                override fun onClick() {
+                    membersListDialog()
+                }
+            })
+        } else {
+            tvSelectedMembers.visibility = View.VISIBLE
+            rvSelectedMembersList.visibility = View.GONE
+        }
+    }
+
     private fun updateCardDetails() {
         var etCardName: EditText = findViewById(R.id.et_name_card_details)
 
@@ -193,6 +298,8 @@ class CardDetailsActivity : BaseActivity() {
             mSelectedColor
         )
 
+        val taskList: ArrayList<Task> = mBoardDetails.taskList
+        taskList.removeAt(taskList.size - 1)
         mBoardDetails.taskList[mTaskListPosition].cards[mCardPosition] = card
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().addUpdateTaskList(this@CardDetailsActivity, mBoardDetails)

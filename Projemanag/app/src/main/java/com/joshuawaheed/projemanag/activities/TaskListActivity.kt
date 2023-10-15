@@ -16,11 +16,13 @@ import com.joshuawaheed.projemanag.firebase.FirestoreClass
 import com.joshuawaheed.projemanag.models.Board
 import com.joshuawaheed.projemanag.models.Card
 import com.joshuawaheed.projemanag.models.Task
+import com.joshuawaheed.projemanag.models.User
 import com.joshuawaheed.projemanag.utils.Constants
 
 class TaskListActivity : BaseActivity() {
     private lateinit var mBoardDetails : Board
     private lateinit var mBoardDocumentId: String
+    private lateinit var mAssignedMemberDetailList: ArrayList<User>
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -105,6 +107,14 @@ class TaskListActivity : BaseActivity() {
 
         val adapter = TaskListitemsAdapter(this, board.taskList)
         rvTaskList.adapter = adapter
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().getAssignedMembersListDetails(this, mBoardDetails.assignedTo)
+    }
+
+    fun boardMembersDetailsList(list: ArrayList<User>) {
+        mAssignedMemberDetailList = list
+        hideProgressDialog()
     }
 
     fun cardDetails(taskListPosition: Int, cardPosition: Int) {
@@ -112,6 +122,7 @@ class TaskListActivity : BaseActivity() {
         intent.putExtra(Constants.BOARD_DETAIL, mBoardDetails)
         intent.putExtra(Constants.TASK_LIST_ITEM_POSITION, taskListPosition)
         intent.putExtra(Constants.CARD_LIST_ITEM_POSITION, cardPosition)
+        intent.putExtra(Constants.BOARD_MEMBERS_LIST, mAssignedMemberDetailList)
         startActivityForResult(intent, CARD_DETAILS_REQUEST_CODE)
     }
 

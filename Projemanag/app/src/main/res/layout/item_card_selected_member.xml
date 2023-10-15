@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:contentDescription="@string/image_contentDescription"
+        android:id="@+id/iv_selected_member_image"
+        android:layout_height="@dimen/item_selected_member_image_size"
+        android:layout_width="@dimen/item_selected_member_image_size"
+        android:src="@drawable/ic_user_place_holder"
+        android:visibility="visible"
+        app:shapeAppearanceOverlay="@style/circleImageView"
+        app:strokeWidth="@dimen/item_member_image_circular_width_size"
+        app:strokeColor="@color/primary_text_color"
+        tools:visibility="gone" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:contentDescription="@string/image_contentDescription"
+        android:id="@+id/iv_add_member"
+        android:layout_height="@dimen/item_selected_member_image_size"
+        android:layout_width="@dimen/item_selected_member_image_size"
+        android:src="@drawable/ic_add_member"
+        android:visibility="visible"
+        app:shapeAppearanceOverlay="@style/circleImageView"
+        app:strokeWidth="@dimen/item_member_image_circular_width_size"
+        app:strokeColor="@color/color_accent"
+        tools:visibility="visible" />
+
+</LinearLayout>
