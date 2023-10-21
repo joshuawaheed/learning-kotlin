@@ -12,7 +12,8 @@ import com.joshuawaheed.projemanag.models.SelectedMembers
 
 open class CardMemberListItemsAdapter(
     private val context: Context,
-    private val list: ArrayList<SelectedMembers>
+    private val list: ArrayList<SelectedMembers>,
+    private val assignedMembers: Boolean
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var onClickListener: OnClickListener? = null
 
@@ -35,7 +36,7 @@ open class CardMemberListItemsAdapter(
             val ivAddMember: ImageView = holder.itemView.findViewById(R.id.iv_add_member)
             val ivSelectedMember: ImageView = holder.itemView.findViewById(R.id.iv_selected_member_image)
 
-            if (position == list.size - 1) {
+            if (position == list.size - 1 && assignedMembers) {
                 ivAddMember.visibility = View.VISIBLE
                 ivSelectedMember.visibility = View.GONE
             } else {
