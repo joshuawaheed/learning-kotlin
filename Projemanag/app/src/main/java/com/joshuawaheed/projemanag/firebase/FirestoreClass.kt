@@ -261,7 +261,7 @@ class FirestoreClass {
             }
     }
 
-    fun updateUserProfileData(activity: MyProfileActivity, userHashMap: HashMap<String, Any>) {
+    fun updateUserProfileData(activity: Activity, userHashMap: HashMap<String, Any>) {
         mFirestore
             .collection(Constants.USERS)
             .document(getCurrentUserId())
@@ -275,10 +275,24 @@ class FirestoreClass {
                     Toast.LENGTH_LONG
                 ).show()
 
-                activity.profileUpdateSuccess()
+                when (activity) {
+                    is MainActivity -> {
+                        activity.tokenUpdateSuccess()
+                    }
+                    is MyProfileActivity -> {
+                        activity.profileUpdateSuccess()
+                    }
+                }
             }
             .addOnFailureListener {
-                activity.hideProgressDialog()
+                when (activity) {
+                    is MainActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                    is MyProfileActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                }
 
                 Toast.makeText(
                     activity,
