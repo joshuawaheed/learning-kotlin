@@ -1,21 +1,21 @@
 package com.joshuawaheed.myshopapp.activities
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.EditText
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.joshuawaheed.myshopapp.R
 import com.joshuawaheed.myshopapp.utils.MSPButton
+import com.joshuawaheed.myshopapp.utils.MSPTextViewBold
 
 class RegisterActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +42,11 @@ class RegisterActivity : BaseActivity() {
         setupActionBar()
 
         findViewById<MSPButton>(R.id.btn_register).setOnClickListener {
-            validateRegisterDetails()
+            registerUser()
+        }
+
+        findViewById<MSPTextViewBold>(R.id.tv_login).setOnClickListener {
+            onBackPressed()
         }
     }
 
@@ -103,9 +107,40 @@ class RegisterActivity : BaseActivity() {
                 false
             }
             else -> {
-                showErrorSnackBar("Your details are valid.", false)
                 true
             }
+        }
+    }
+
+    private fun registerUser() {
+        if (validateRegisterDetails()) {
+            showProgressDialog(resources.getString(R.string.please_wait))
+
+            val etEmail: EditText = findViewById(R.id.et_email)
+            val email: String = etEmail.text.toString().trim { it <= ' ' }
+            val etPassword: EditText = findViewById(R.id.et_password)
+            val password: String = etPassword.text.toString().trim { it <= ' ' }
+
+            FirebaseAuth
+                .getInstance()
+                .createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    hideProgressDialog()
+
+                    if (task.isSuccessful) {
+                        val firebaseUser: FirebaseUser = task.result!!.user!!
+
+                        showErrorSnackBar(
+                            "You are registered successfully. Your user id is ${firebaseUser.uid}",
+                            false
+                        )
+
+                        FirebaseAuth.getInstance().signOut()
+                        finish()
+                    } else {
+                        showErrorSnackBar(task.exception!!.message.toString(), true)
+                    }
+                }
         }
     }
 }
