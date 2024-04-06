@@ -1,4 +1,4 @@
-package com.joshuawaheed.myshopapp.activities
+package com.joshuawaheed.myshopapp.ui.activities
 
 import android.os.Bundle
 import android.widget.EditText
