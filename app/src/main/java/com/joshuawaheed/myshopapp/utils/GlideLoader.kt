@@ -20,4 +20,16 @@ class GlideLoader(val context: Context) {
             e.printStackTrace()
         }
     }
+
+    fun loadProductPicture(imageURI: Uri, imageView: ImageView) {
+        try {
+            Glide
+                .with(context)
+                .load(Uri.parse(imageURI.toString()))
+                .centerCrop()
+                .into(imageView)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
 }

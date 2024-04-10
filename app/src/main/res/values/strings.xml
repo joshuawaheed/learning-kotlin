@@ -49,4 +49,25 @@
     <string name="lbl_edit">Edit</string>
     <string name="lbl_addresses">Addresses</string>
     <string name="btn_lbl_logout">Logout</string>
+    <string name="action_add_product">Add Product</string>
+    <string name="title_add_product">ADD PRODUCT</string>
+    <string name="title_edit_product">EDIT PRODUCT</string>
+    <string name="et_hint_product_title">Product Title</string>
+    <string name="et_hint_product_price">Product Price ($)</string>
+    <string name="et_hint_product_description">Product Description</string>
+    <string name="et_hint_product_quantity">Product Quantity</string>
+    <string name="err_msg_select_product_image">Select the product image</string>
+    <string name="err_msg_enter_product_title">Enter the product title</string>
+    <string name="err_msg_enter_product_price">Enter the product price</string>
+    <string name="err_msg_enter_product_description">Enter the product description</string>
+    <string name="err_msg_enter_product_quantity">Enter the product quantity</string>
+    <string name="product_upload_success">Your product was uploaded successfully.</string>
+    <string name="no_products_added_yet">No products added yet!</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_dashboard_item_found">No items found!</string>
+    <string name="product_delete_success_message">Your product was deleted successfully</string>
+    <string name="delete_dialog_title">Delete</string>
+    <string name="delete_dialog_message">Are you sure you want to delete the product?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

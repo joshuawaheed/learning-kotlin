@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.joshuawaheed.myshopapp.databinding.FragmentOrdersBinding
 
-class OrdersFragment : Fragment() {
+class OrdersFragment : BaseFragment() {
 
     private var _binding: FragmentOrdersBinding? = null
 
