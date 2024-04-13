@@ -19,6 +19,7 @@ object Constants {
     // Parcelable
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
     const val EXTRA_PRODUCT_DETAILS: String = "extra_product_details"
+    const val EXTRA_PRODUCT_ID: String = "extra_product_id"
 
     // Permissions
     const val READ_STORAGE_PERMISSION_CODE = 2

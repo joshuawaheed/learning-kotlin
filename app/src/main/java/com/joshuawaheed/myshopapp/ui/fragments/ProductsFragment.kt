@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.joshuawaheed.myshopapp.R
-import com.joshuawaheed.myshopapp.adapters.ProductAdapter
+import com.joshuawaheed.myshopapp.ui.adapters.ProductAdapter
 import com.joshuawaheed.myshopapp.databinding.FragmentProductsBinding
 import com.joshuawaheed.myshopapp.firestore.FirestoreClass
 import com.joshuawaheed.myshopapp.models.Product

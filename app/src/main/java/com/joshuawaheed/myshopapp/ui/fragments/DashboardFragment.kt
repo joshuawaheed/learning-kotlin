@@ -15,12 +15,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.joshuawaheed.myshopapp.R
-import com.joshuawaheed.myshopapp.adapters.DashboardAdapter
-import com.joshuawaheed.myshopapp.adapters.ProductAdapter
+import com.joshuawaheed.myshopapp.ui.adapters.DashboardAdapter
+import com.joshuawaheed.myshopapp.ui.adapters.ProductAdapter
 import com.joshuawaheed.myshopapp.databinding.FragmentDashboardBinding
 import com.joshuawaheed.myshopapp.firestore.FirestoreClass
 import com.joshuawaheed.myshopapp.models.Product
+import com.joshuawaheed.myshopapp.ui.activities.ProductDetailsActivity
 import com.joshuawaheed.myshopapp.ui.activities.SettingsActivity
+import com.joshuawaheed.myshopapp.utils.Constants
 
 class DashboardFragment : BaseFragment() {
 
@@ -86,6 +88,14 @@ class DashboardFragment : BaseFragment() {
             val productAdapter = DashboardAdapter(requireActivity(), dashboardItemsList)
             rvDashboardItems.adapter = productAdapter
             tvNoDashbaordItemsFound.visibility = View.GONE
+
+            productAdapter.setOnClickListener(object: DashboardAdapter.OnClickListener {
+                override fun onClick(position: Int, product: Product) {
+                    val intent = Intent(context, ProductDetailsActivity::class.java)
+                    intent.putExtra(Constants.PRODUCT_USER_ID, product.product_id)
+                    startActivity(intent)
+                }
+            })
         } else {
             rvDashboardItems.visibility = View.GONE
             tvNoDashbaordItemsFound.visibility = View.VISIBLE

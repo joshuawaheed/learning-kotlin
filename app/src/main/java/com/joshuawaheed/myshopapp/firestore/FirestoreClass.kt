@@ -17,6 +17,7 @@ import com.joshuawaheed.myshopapp.ui.activities.RegisterActivity
 import com.joshuawaheed.myshopapp.ui.activities.UserProfileActivity
 import com.joshuawaheed.myshopapp.models.User
 import com.joshuawaheed.myshopapp.ui.activities.AddProductActivity
+import com.joshuawaheed.myshopapp.ui.activities.ProductDetailsActivity
 import com.joshuawaheed.myshopapp.ui.activities.SettingsActivity
 import com.joshuawaheed.myshopapp.ui.fragments.DashboardFragment
 import com.joshuawaheed.myshopapp.ui.fragments.ProductsFragment
@@ -232,6 +233,30 @@ class FirestoreClass {
             .addOnFailureListener { e ->
                 fragment.hideProgressDialog()
                 Log.e(fragment.javaClass.simpleName, "Error while getting dashboard items list.", e)
+            }
+    }
+
+    fun getProductDetails(activity: ProductDetailsActivity, productId: String) {
+        mFirestore
+            .collection(Constants.PRODUCTS)
+            .document(productId)
+            .get()
+            .addOnSuccessListener { document ->
+                Log.i(document.javaClass.simpleName, document.toString())
+                val product = document.toObject(Product::class.java)
+
+                if (product != null) {
+                    activity.productDetailsSuccess(product)
+                }
+            }
+            .addOnFailureListener { e ->
+                activity.hideProgressDialog()
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while getting the product.",
+                    e
+                )
             }
     }
 

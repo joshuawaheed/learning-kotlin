@@ -1,4 +1,4 @@
-package com.joshuawaheed.myshopapp.adapters
+package com.joshuawaheed.myshopapp.ui.adapters
 
 import android.content.Context
 import android.net.Uri
@@ -11,20 +11,20 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.joshuawaheed.myshopapp.R
 import com.joshuawaheed.myshopapp.models.Product
-import com.joshuawaheed.myshopapp.ui.fragments.ProductsFragment
 import com.joshuawaheed.myshopapp.utils.GlideLoader
 
-class ProductAdapter(
+class DashboardAdapter(
     private val context: Context,
-    private val products: ArrayList<Product>,
-    private val fragment: ProductsFragment
+    private val products: ArrayList<Product>
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var onClickListener: OnClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater
             .from(context)
-            .inflate(R.layout.item_product, parent, false)
+            .inflate(R.layout.item_dashboard, parent, false)
 
-        return ProductViewHolder(view)
+        return DashboardViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -34,22 +34,31 @@ class ProductAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = products[position]
 
-        if (holder is ProductViewHolder) {
-            val ivItemImage: ImageView = holder.itemView.findViewById(R.id.iv_item_image)
+        if (holder is DashboardViewHolder) {
+            val ivItemImage: ImageView = holder.itemView.findViewById(R.id.iv_dashboard_item_image)
             GlideLoader(context).loadProductPicture(Uri.parse(model.image), ivItemImage)
 
-            val tvItemName: TextView = holder.itemView.findViewById(R.id.tv_item_name)
+            val tvItemName: TextView = holder.itemView.findViewById(R.id.tv_dashboard_item_name)
             tvItemName.text = model.title
 
-            val tvItemPrice: TextView = holder.itemView.findViewById(R.id.tv_item_price)
+            val tvItemPrice: TextView = holder.itemView.findViewById(R.id.tv_dashboard_item_price)
             tvItemPrice.text = "$" + model.price
 
-            val ibDeleteProduct: ImageButton = holder.itemView.findViewById(R.id.ib_delete_product)
-            ibDeleteProduct.setOnClickListener {
-                fragment.deleteProduct(model.product_id)
+            holder.itemView.setOnClickListener {
+                if (onClickListener != null) {
+                    onClickListener!!.onClick(position, model)
+                }
             }
         }
     }
 
-    private class ProductViewHolder(view: View): RecyclerView.ViewHolder(view)
+    fun setOnClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
+    }
+
+    private class DashboardViewHolder(view: View): RecyclerView.ViewHolder(view)
+
+    interface OnClickListener {
+        fun onClick(position: Int, product: Product)
+    }
 }
