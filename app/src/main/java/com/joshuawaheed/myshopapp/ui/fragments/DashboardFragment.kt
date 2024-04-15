@@ -20,6 +20,7 @@ import com.joshuawaheed.myshopapp.ui.adapters.ProductAdapter
 import com.joshuawaheed.myshopapp.databinding.FragmentDashboardBinding
 import com.joshuawaheed.myshopapp.firestore.FirestoreClass
 import com.joshuawaheed.myshopapp.models.Product
+import com.joshuawaheed.myshopapp.ui.activities.CartListActivity
 import com.joshuawaheed.myshopapp.ui.activities.ProductDetailsActivity
 import com.joshuawaheed.myshopapp.ui.activities.SettingsActivity
 import com.joshuawaheed.myshopapp.utils.Constants
@@ -43,6 +44,10 @@ class DashboardFragment : BaseFragment() {
         when (id) {
             R.id.action_settings -> {
                 startActivity(Intent(activity, SettingsActivity::class.java))
+                return true
+            }
+            R.id.action_cart -> {
+                startActivity(Intent(activity, CartListActivity::class.java))
                 return true
             }
         }
@@ -92,7 +97,8 @@ class DashboardFragment : BaseFragment() {
             productAdapter.setOnClickListener(object: DashboardAdapter.OnClickListener {
                 override fun onClick(position: Int, product: Product) {
                     val intent = Intent(context, ProductDetailsActivity::class.java)
-                    intent.putExtra(Constants.PRODUCT_USER_ID, product.product_id)
+                    intent.putExtra(Constants.EXTRA_PRODUCT_ID, product.product_id)
+                    intent.putExtra(Constants.EXTRA_PRODUCT_OWNER_ID, product.user_id)
                     startActivity(intent)
                 }
             })

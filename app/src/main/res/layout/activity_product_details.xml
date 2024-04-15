@@ -65,6 +65,7 @@
                 android:id="@+id/ll_product_details_title_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorLightGrey"
                 android:layout_marginTop="@dimen/product_details_title_price_marginTop"
                 android:padding="@dimen/product_details_title_price_padding"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -117,7 +118,7 @@
                 android:id="@+id/ll_product_details_stock_quantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/product_details_label_margin"
+                android:layout_margin="@dimen/product_details_label_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ll_product_details_description"
@@ -127,8 +128,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="@dimen/product_details_stock_quantity_paddingTopBottom"
-                    android:paddingEnd="@dimen/product_details_stock_quantity_paddingStartEnd"
-                    android:paddingStart="@dimen/product_details_stock_quantity_paddingStartEnd"
                     android:paddingTop="@dimen/product_details_stock_quantity_paddingTopBottom"
                     android:text="@string/lbl_product_details_stock_quantity"
                     android:textSize="@dimen/product_details_label_textSize" />
@@ -137,10 +136,60 @@
                     android:id="@+id/tv_product_details_stock_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="5"
-                    android:textSize="@dimen/product_details_stock_quantity_textSize" />
+                    android:paddingBottom="@dimen/product_details_stock_quantity_paddingTopBottom"
+                    android:paddingEnd="@dimen/product_details_stock_quantity_paddingStartEnd"
+                    android:paddingStart="@dimen/product_details_stock_quantity_paddingStartEnd"
+                    android:paddingTop="@dimen/product_details_stock_quantity_paddingTopBottom"
+                    android:textSize="@dimen/product_details_stock_quantity_textSize"
+                    tools:text="5" />
 
             </LinearLayout>
+
+            <com.joshuawaheed.myshopapp.utils.MSPButton
+                android:id="@+id/btn_add_to_cart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_background"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:paddingTop="@dimen/btn_padding"
+                android:paddingBottom="@dimen/btn_padding"
+                android:text="@string/btn_lbl_add_to_cart"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/btn_textSize"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_product_details_stock_quantity"
+                tools:visibility="visible" />
+
+            <com.joshuawaheed.myshopapp.utils.MSPButton
+                android:id="@+id/btn_go_to_cart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_background"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:paddingTop="@dimen/btn_padding"
+                android:paddingBottom="@dimen/btn_padding"
+                android:text="@string/btn_lbl_go_to_cart"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/btn_textSize"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_add_to_cart"
+                tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
