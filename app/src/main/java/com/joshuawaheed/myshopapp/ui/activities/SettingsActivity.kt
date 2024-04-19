@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.widget.Toolbar
@@ -36,6 +37,7 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
         setupActionBar()
         findViewById<TextView>(R.id.tv_edit).setOnClickListener(this)
         findViewById<Button>(R.id.btn_logout).setOnClickListener(this)
+        findViewById<LinearLayout>(R.id.ll_address).setOnClickListener(this)
     }
 
     override fun onResume() {
@@ -57,6 +59,10 @@ class SettingsActivity : BaseActivity(), View.OnClickListener {
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                     finish()
+                }
+                R.id.ll_address -> {
+                    val intent = Intent(this@SettingsActivity, AddressListActivity::class.java)
+                    startActivity(intent)
                 }
             }
         }

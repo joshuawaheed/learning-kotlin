@@ -11,6 +11,7 @@ object Constants {
     // Firebase Constants
     const val USERS: String = "users"
     const val PRODUCTS: String = "products"
+    const val ADDRESSES: String = "addresses"
 
     // Preferences
     const val MYSHOPAPP_PREFERENCES: String = "MyShopPalPrefs"
@@ -21,12 +22,15 @@ object Constants {
     const val EXTRA_PRODUCT_DETAILS: String = "extra_product_details"
     const val EXTRA_PRODUCT_ID: String = "extra_product_id"
     const val EXTRA_PRODUCT_OWNER_ID: String = "extra_product_owner_id"
+    const val EXTRA_ADDRESS_DETAILS: String = "AddressDetails"
+    const val EXTRA_SELECT_ADDRESS: String = "extra_select_address"
 
     // Permissions
     const val READ_STORAGE_PERMISSION_CODE = 2
 
     // Request codes
     const val PICK_IMAGE_REQUEST_CODE = 1
+    const val ADD_ADDRESS_REQUEST_CODE: Int = 121
 
     // User information
     const val MALE: String = "male"
@@ -48,6 +52,11 @@ object Constants {
     const val DEFAULT_CART_QUANTITY: String = "1"
     const val CART_ITEMS: String = "cart_items"
     const val CART_QUANTITY: String = "cart_quantity"
+
+    // Address
+    const val HOME: String = "Home"
+    const val OFFICE: String = "Office"
+    const val OTHER: String = "Other"
 
     fun showImageChooser(activity: Activity) {
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

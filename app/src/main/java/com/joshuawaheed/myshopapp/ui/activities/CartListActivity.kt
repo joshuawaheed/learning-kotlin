@@ -1,8 +1,10 @@
 package com.joshuawaheed.myshopapp.ui.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -18,6 +20,7 @@ import com.joshuawaheed.myshopapp.firestore.FirestoreClass
 import com.joshuawaheed.myshopapp.models.CartItem
 import com.joshuawaheed.myshopapp.models.Product
 import com.joshuawaheed.myshopapp.ui.adapters.CartItemsListAdapter
+import com.joshuawaheed.myshopapp.utils.Constants
 
 class CartListActivity : BaseActivity() {
     private lateinit var mProductsList: ArrayList<Product>
@@ -35,6 +38,12 @@ class CartListActivity : BaseActivity() {
         }
 
         setupActionBar()
+
+        findViewById<Button>(R.id.btn_checkout).setOnClickListener {
+            val intent = Intent(this@CartListActivity, AddressListActivity::class.java)
+            intent.putExtra(Constants.EXTRA_SELECT_ADDRESS, true)
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {

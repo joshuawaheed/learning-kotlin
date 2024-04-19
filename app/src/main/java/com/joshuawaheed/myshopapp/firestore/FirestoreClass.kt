@@ -11,13 +11,16 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.joshuawaheed.myshopapp.models.Address
 import com.joshuawaheed.myshopapp.models.CartItem
 import com.joshuawaheed.myshopapp.models.Product
 import com.joshuawaheed.myshopapp.ui.activities.LoginActivity
 import com.joshuawaheed.myshopapp.ui.activities.RegisterActivity
 import com.joshuawaheed.myshopapp.ui.activities.UserProfileActivity
 import com.joshuawaheed.myshopapp.models.User
+import com.joshuawaheed.myshopapp.ui.activities.AddEditAddressActivity
 import com.joshuawaheed.myshopapp.ui.activities.AddProductActivity
+import com.joshuawaheed.myshopapp.ui.activities.AddressListActivity
 import com.joshuawaheed.myshopapp.ui.activities.CartListActivity
 import com.joshuawaheed.myshopapp.ui.activities.ProductDetailsActivity
 import com.joshuawaheed.myshopapp.ui.activities.SettingsActivity
@@ -439,6 +442,91 @@ class FirestoreClass {
                 Log.e(
                     context.javaClass.simpleName,
                     "Error while updating the cart item.",
+                    e
+                )
+            }
+    }
+
+    fun addAddress(activity: AddEditAddressActivity, addressInfo: Address) {
+        mFirestore
+            .collection(Constants.ADDRESSES)
+            .document()
+            .set(addressInfo, SetOptions.merge())
+            .addOnSuccessListener {
+                activity.addUpdateAddressSuccess()
+            }
+            .addOnFailureListener { e ->
+                activity.hideProgressDialog()
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while adding the address.",
+                    e
+                )
+            }
+    }
+
+    fun getAddressesList(activity: AddressListActivity) {
+        mFirestore
+            .collection(Constants.ADDRESSES)
+            .whereEqualTo(Constants.PRODUCT_USER_ID, getCurrentUserID())
+            .get()
+            .addOnSuccessListener { document ->
+                Log.e(activity.javaClass.simpleName, document.documents.toString())
+
+                val addressList: ArrayList<Address> = ArrayList()
+
+                for (i in document.documents) {
+                    val address = i.toObject(Address::class.java)!!
+                    address.id = i.id
+                    addressList.add(address)
+                }
+
+                activity.successAddressListFromFirestore(addressList)
+            }
+            .addOnFailureListener { e ->
+                activity.hideProgressDialog()
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while getting the address list.",
+                    e
+                )
+            }
+    }
+
+    fun updateAddressDetails(activity: AddEditAddressActivity, addressInfo: Address, addressId: String) {
+        mFirestore
+            .collection(Constants.ADDRESSES)
+            .document(addressId)
+            .set(addressInfo, SetOptions.merge())
+            .addOnSuccessListener {
+                activity.addUpdateAddressSuccess()
+            }
+            .addOnFailureListener { e ->
+                activity.hideProgressDialog()
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while updating the address.",
+                    e
+                )
+            }
+    }
+
+    fun deleteAddress(activity: AddressListActivity, addressId: String) {
+        mFirestore
+            .collection(Constants.ADDRESSES)
+            .document(addressId)
+            .delete()
+            .addOnSuccessListener {
+                activity.deleteAddressSuccess()
+            }
+            .addOnFailureListener { e ->
+                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while deleting the address.",
                     e
                 )
             }
