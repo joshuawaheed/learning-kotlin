@@ -12,6 +12,7 @@ object Constants {
     const val USERS: String = "users"
     const val PRODUCTS: String = "products"
     const val ADDRESSES: String = "addresses"
+    const val ORDERS: String = "orders"
 
     // Preferences
     const val MYSHOPAPP_PREFERENCES: String = "MyShopPalPrefs"
@@ -24,6 +25,7 @@ object Constants {
     const val EXTRA_PRODUCT_OWNER_ID: String = "extra_product_owner_id"
     const val EXTRA_ADDRESS_DETAILS: String = "AddressDetails"
     const val EXTRA_SELECT_ADDRESS: String = "extra_select_address"
+    const val EXTRA_SELECTED_ADDRESS: String = "extra_selected_address"
 
     // Permissions
     const val READ_STORAGE_PERMISSION_CODE = 2

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.joshuawaheed.myshopapp.R
 import com.joshuawaheed.myshopapp.models.Address
 import com.joshuawaheed.myshopapp.ui.activities.AddEditAddressActivity
+import com.joshuawaheed.myshopapp.ui.activities.CheckoutActivity
 import com.joshuawaheed.myshopapp.utils.Constants
 
 open class AddressListAdapter(
@@ -49,11 +50,9 @@ open class AddressListAdapter(
 
             if (selectAddress) {
                 holder.itemView.setOnClickListener {
-                    Toast.makeText(
-                        context,
-                        "Selected address: ${model.address} ${model.zipCode}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    val intent = Intent(context, CheckoutActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_SELECTED_ADDRESS, model)
+                    context.startActivity(intent)
                 }
             }
         }

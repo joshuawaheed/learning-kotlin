@@ -21,7 +21,8 @@ import com.joshuawaheed.myshopapp.utils.GlideLoader
 
 open class CartItemsListAdapter(
     private val context: Context,
-    private var list: ArrayList<CartItem>
+    private var list: ArrayList<CartItem>,
+    private val updateCartItems: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return CartItemViewHolder(
@@ -50,20 +51,34 @@ open class CartItemsListAdapter(
             val tvCartQuantity: TextView = holder.itemView.findViewById(R.id.tv_cart_quantity)
             val ibRemoveCartItem: ImageButton = holder.itemView.findViewById(R.id.ib_remove_cart_item)
             val ibAddCartItem: ImageButton = holder.itemView.findViewById(R.id.ib_add_cart_item)
+            val ibDeleteCartItem: ImageButton = holder.itemView.findViewById(R.id.ib_delete_cart_item)
 
             if (model.cart_quantity == "0") {
                 ibRemoveCartItem.visibility = View.GONE
                 ibAddCartItem.visibility = View.GONE
                 tvCartQuantity.text = context.resources.getString(R.string.lbl_out_of_stock)
                 tvCartQuantity.setTextColor(ContextCompat.getColor(context, R.color.colorSnackBarError))
+
+                if (updateCartItems) {
+                    ibDeleteCartItem.visibility = View.VISIBLE
+                } else {
+                    ibDeleteCartItem.visibility = View.GONE
+                }
             } else {
-                ibRemoveCartItem.visibility = View.VISIBLE
-                ibAddCartItem.visibility = View.VISIBLE
+                if (updateCartItems) {
+                    ibRemoveCartItem.visibility = View.VISIBLE
+                    ibAddCartItem.visibility = View.VISIBLE
+                    ibDeleteCartItem.visibility = View.VISIBLE
+                } else {
+                    ibRemoveCartItem.visibility = View.GONE
+                    ibAddCartItem.visibility = View.GONE
+                    ibDeleteCartItem.visibility = View.GONE
+                }
+
                 tvCartQuantity.text = model.cart_quantity
                 tvCartQuantity.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryText))
             }
 
-            val ibDeleteCartItem: ImageButton = holder.itemView.findViewById(R.id.ib_delete_cart_item)
             ibDeleteCartItem.setOnClickListener {
                 when (context) {
                     is CartListActivity -> {
