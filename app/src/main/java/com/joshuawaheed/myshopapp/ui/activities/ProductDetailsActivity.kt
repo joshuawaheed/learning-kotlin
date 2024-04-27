@@ -25,6 +25,7 @@ import com.joshuawaheed.myshopapp.utils.GlideLoader
 class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
     private var mProductId: String = ""
     private lateinit var mProductDetails: Product
+    private var mProductOwnerId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,15 +42,14 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
             mProductId = intent.getStringExtra(Constants.EXTRA_PRODUCT_ID)!!
         }
 
-        var productOwnerId: String = ""
         if (intent.hasExtra(Constants.EXTRA_PRODUCT_OWNER_ID)) {
-            productOwnerId = intent.getStringExtra(Constants.EXTRA_PRODUCT_OWNER_ID)!!
+            mProductOwnerId = intent.getStringExtra(Constants.EXTRA_PRODUCT_OWNER_ID)!!
         }
 
         val btnAddToCart: Button = findViewById(R.id.btn_add_to_cart)
         val btnGoToCart: Button = findViewById(R.id.btn_go_to_cart)
 
-        if (FirestoreClass().getCurrentUserID() == productOwnerId) {
+        if (FirestoreClass().getCurrentUserID() == mProductOwnerId) {
             btnAddToCart.visibility = View.GONE
             btnGoToCart.visibility = View.GONE
         } else {
@@ -133,6 +133,7 @@ class ProductDetailsActivity : BaseActivity(), View.OnClickListener {
     private fun addToCart() {
         val cartItem = CartItem(
             FirestoreClass().getCurrentUserID(),
+            mProductOwnerId,
             mProductId,
             mProductDetails.title,
             mProductDetails.price,

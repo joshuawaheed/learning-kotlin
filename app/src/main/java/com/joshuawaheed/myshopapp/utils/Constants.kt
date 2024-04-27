@@ -13,6 +13,7 @@ object Constants {
     const val PRODUCTS: String = "products"
     const val ADDRESSES: String = "addresses"
     const val ORDERS: String = "orders"
+    const val SOLD_PRODUCTS: String = "sold_products"
 
     // Preferences
     const val MYSHOPAPP_PREFERENCES: String = "MyShopPalPrefs"
@@ -26,6 +27,8 @@ object Constants {
     const val EXTRA_ADDRESS_DETAILS: String = "AddressDetails"
     const val EXTRA_SELECT_ADDRESS: String = "extra_select_address"
     const val EXTRA_SELECTED_ADDRESS: String = "extra_selected_address"
+    const val EXTRA_MY_ORDER_DETAILS: String = "extra_MY_ORDER_DETAILS"
+    const val EXTRA_SOLD_PRODUCT_DETAILS: String = "extra_sold_product_details"
 
     // Permissions
     const val READ_STORAGE_PERMISSION_CODE = 2
@@ -49,6 +52,7 @@ object Constants {
     const val PRODUCT_IMAGE_URL_PREFIX: String = "Product_Image"
     const val PRODUCT_USER_ID: String = "user_id"
     const val PRODUCT_ID: String = "product_id"
+    const val STOCK_QUANTITY: String = "stock_quantity"
 
     // Cart
     const val DEFAULT_CART_QUANTITY: String = "1"

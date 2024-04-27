@@ -18,4 +18,6 @@
     <color name="colorOffWhite">#F8F8F8</color>
     <color name="item_value_text_color">#545353</color>
     <color name="colorImageViewBackground">#E1E1E1</color>
+    <color name="colorOrderStatusInProcess">#FF9800</color>
+    <color name="colorOrderStatusDelivered">#8BC34A</color>
 </resources>

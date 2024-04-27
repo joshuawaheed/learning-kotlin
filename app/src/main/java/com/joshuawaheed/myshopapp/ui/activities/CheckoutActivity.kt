@@ -25,6 +25,7 @@ class CheckoutActivity : BaseActivity() {
     private lateinit var mCartItemsList: ArrayList<CartItem>
     private var mSubTotal: Double = 0.0
     private var mTotalAmount: Double = 0.0
+    private lateinit var mOrderDetails: Order
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,7 +146,7 @@ class CheckoutActivity : BaseActivity() {
         showProgressDialog(resources.getString(R.string.please_wait))
 
         if (mAddressDetails != null) {
-            val order = Order(
+            mOrderDetails = Order(
                 FirestoreClass().getCurrentUserID(),
                 mCartItemsList,
                 mAddressDetails!!,
@@ -154,9 +155,10 @@ class CheckoutActivity : BaseActivity() {
                 mSubTotal.toString(),
                 "10.0",
                 mTotalAmount.toString(),
+                System.currentTimeMillis()
             )
 
-            FirestoreClass().placeOrder(this@CheckoutActivity, order)
+            FirestoreClass().placeOrder(this@CheckoutActivity, mOrderDetails)
         } else {
             hideProgressDialog()
 
@@ -169,6 +171,10 @@ class CheckoutActivity : BaseActivity() {
     }
 
     fun orderPlacedSuccess() {
+        FirestoreClass().updateAllDetails(this@CheckoutActivity, mCartItemsList, mOrderDetails)
+    }
+
+    fun allDetailsUpdatedSuccessfully() {
         hideProgressDialog()
 
         Toast.makeText(
