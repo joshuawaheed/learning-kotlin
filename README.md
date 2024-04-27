@@ -13,3 +13,4 @@ This repo contains all the Kotlin applications that I have learned to build from
 7. [Happy Places](HappyPlaces)
 8. [Weather App](WeatherApp)
 9. [Projemanag](Projemanag)
+10. [My Shop App](MyShopApp)
